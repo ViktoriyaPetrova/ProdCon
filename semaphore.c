@@ -101,13 +101,16 @@ int main(int argc, char *argv[]){
     }
     rc = pthread_join(p,NULL);
     if(rc){
-        printf("ERROR: pthred_join(%d)\n", rc);
+        printf("ERROR: pthread_join(%d)\n", rc);
         exit(1);
     }
     rc = pthread_join(c,NULL);
     if(rc){
-        printf("ERROR: pthred_join(%d)\n", rc);
+        printf("ERROR: pthread_join(%d)\n", rc);
         exit(1);
     }
+    sem_destroy(&empty);
+    sem_destroy(&full);
+
     exit(0);
 }

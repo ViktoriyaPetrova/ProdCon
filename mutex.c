@@ -73,6 +73,7 @@ void *producer(void *arg){
         args -> flag = 1;
         pthread_cond_signal(&fill);
         pthread_mutex_unlock(&lock);
+        pthread_mutex_destroy(&lock);
     }
     return NULL;
 }
@@ -89,6 +90,7 @@ void *consumer(void *arg){
         args -> flag = 0;
         pthread_cond_signal(&empty);
         pthread_mutex_unlock(&lock);
+        pthread_mutex_destroy(&lock);
     }
     return NULL;
 
@@ -111,12 +113,12 @@ int main(int argc, char *argv[]){
     }
     rc = pthread_join(p,NULL);
     if(rc){
-        printf("ERROR: pthred_join(%d)\n", rc);
+        printf("ERROR: pthread_join(%d)\n", rc);
         exit(1);
     }
     rc = pthread_join(c,NULL);
     if(rc){
-        printf("ERROR: pthred_join(%d)\n", rc);
+        printf("ERROR: pthread_join(%d)\n", rc);
         exit(1);
     }
     exit(0);
